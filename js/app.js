@@ -1,61 +1,85 @@
-const allPhones = () => {
-    document.getElementById('phone-container').innerHTML = "";
-    const searchText = document.getElementById('input-search').value;
-
-    const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(value => displaySearchPhone(value.data));
-    document.getElementById('input-search').value = "";
-};
-
-/* Display search phones */
-const displaySearchPhone = (phones) => {
-    // console.log(phones);
-    for (const phone of phones) {
-        const parent = document.getElementById('phone-container');
-
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <div class="card">
-                <img src="${phone.image}" class="card-img-top rounded w-75 h-100" alt="...">
-                <div class="card-body">
-                    <h3 class="card-title">Brand: ${phone.brand}</h3>
-                    <h4 class="card-title">Phone Name: ${phone.phone_name}</h4>
-                </div>
-                <div class="card-footer">
-                     <button onclick ="details()" class ="btn btn-primary">Show Details</button>
-                </div>
-             </div>
-        `;
-        parent.appendChild(div);
-        // console.log(phone);
+const searchPhone = () => {
+    const searchField = document.getElementById('search-field');
+    const searchText = searchField.value;
+    // console.log(searchText);
+    searchField.value = '';
+    if (searchText == '') {
+        document.getElementById('error-message').style.display = 'block';
     }
-};
-
-const details = (id) => {
-    const url = `https://openapi.programming-hero.com/api/phone/${id}`;
-    fetch(url)
-        .then(res => res.json())
-        .then(dat => displayDetails(dat.data));
+    else {
+        //load data
+        const url = `https://openapi.programming-hero.com/api/phones?search=${searchText}`;
+        fetch(url)
+            .then(res => res.json())
+            .then(dat => displaySearchResult(dat.data));
+        document.getElementById('error-message').style.display = 'none';
+    }
 }
 
-const displayDetails = (infos) => {
-    console.log(infos);
-    /*  for (const info of infos) {
-         const parent = document.getElementById('phone-details-container');
- 
-         const div = document.createElement('div');
-         div.innerHTML = `
-             <div class="card">
-                 <img src="${info.image}" class="card-img-top rounded w-75 h-100" alt="...">
-                 <div class="card-body">
-                     <h3 class="card-title">Brand: ${info.brand}</h3>
-                     <h4 class="card-title">Phone Name: ${info.name}</h4>
-                 </div>
-              </div>
-         `;
-         parent.appendChild(div);
-         console.log(info);
-     } */
-};
+/* const displayError = () => {
+    document.getElementById('error-message').style.display = 'none';
+} */
+
+const displaySearchResult = phones => {
+    const searchResult = document.getElementById('search-result');
+    searchResult.textContent = '';
+    if (!phones) {
+        document.getElementById('error-message').style.display = 'block';
+    }
+    let i = 0;
+    phones?.forEach(phone => {
+        i++;
+        if (i > 20) {
+            return;
+        }
+        const div = document.createElement('div');
+        div.classList.add('col');
+        div.innerHTML = `
+        <div class="card border border-white rounded">
+            <img src="${phone.image}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title">Brand: ${phone.brand}</h5>
+                <p class="card-text">Model: ${phone.phone_name}</p>
+                <a href="#" onclick="loadPhoneDetails('${phone.slug}')" class ="btn btn-primary">Show Details</a>
+             </div>
+         </div>
+        `;
+        searchResult.appendChild(div);
+    });
+}
+
+const loadPhoneDetails = phoneId => {
+    const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
+    fetch(url)
+        .then(res => res.json())
+        .then(dat => displayPhoneDetails(dat.data));
+}
+
+const displayPhoneDetails = phone => {
+    // console.log(phone);
+    const phoneDetails = document.getElementById('phone-details');
+    phoneDetails.textContent = '';
+    const div = document.createElement('div');
+    div.classList.add('card');
+    div.innerHTML = `
+        <div class="card border border-white rounded">
+            <img src="${phone.image}" class="card-img-top" alt="...">
+            <div class="card-body text-center">
+                <h5 class="card-title">Brand: ${phone.brand}</h5>
+                <p class="card-text">Release Date: ${phone.releaseDate}</p>
+                <p class="card-text">Storage: ${phone.mainFeatures.storage}</p>
+                <p class="card-text">Display Size: ${phone.mainFeatures.displaySize}</p>
+                <p class="card-text">Chipset: ${phone.mainFeatures.chipSet}</p>
+                <p class="card-text">Memory: ${phone.mainFeatures.memory}</p>
+                <p class="card-text">Main Sensor: ${phone.mainFeatures.sensors[0]}</p>
+                <p class="card-text">WLAN: ${phone.others.WLAN}</p>
+                <p class="card-text">Bluetooth: ${phone.others.Bluetooth}</p>
+                <p class="card-text">GPS: ${phone.others.GPS}</p>
+                <p class="card-text">NFC: ${phone.others.NFC}</p>
+                <p class="card-text">Radio: ${phone.others.Radio}</p>
+                <p class="card-text">USB: ${phone.others.USB}</p>
+            </div>
+        </div>
+    `;
+    phoneDetails.appendChild(div);
+}

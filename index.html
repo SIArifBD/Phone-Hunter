@@ -13,83 +13,33 @@
         integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 </head>
 
-<body>
-    <header class="text-center">
-        <h1>Mobile Shop BD</h1>
+<body class="bg-info"">
+    <header class=" text-center">
+    <h1>Mobile Shop<span class="text-success"> BD</span></h1>
     </header>
     <main>
-        <div class="container m-auto">
-            <!-- Search Box Start -->
-            <div class="container">
-                <div class="input-group mb-3">
-                    <input id="input-search" type="text" class="form-control border-primary" placeholder="Search"
-                        aria-label="Recipient's username" aria-describedby="button-addon2">
-                    <button onclick="allPhones()" class="btn btn-outline-primary" type="button"
-                        id="button-addon2">Search</button>
-                </div>
+        <div class="container">
+            <!-- phone search area start -->
+            <div class="input-group mb-3 w-50 mx-auto">
+                <input id="search-field" type="text" class="form-control" placeholder="Search phone"
+                    aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button onclick="searchPhone()" class="btn btn-outline-secondary" type="button"
+                    id="button-search">search</button>
             </div>
-            <!-- Search Box End -->
-            <!-- Error Message Start -->
-            <div class="container">
-                <div class="alert alert-danger text-center" role="alert">
-                    Wrong Input Search - Please Try Again later!!!
-                </div>
+            <!-- phone search area End -->
+            <div>
+                <p id="error-message" class=" text-danger text-center">Something went wrong please try again later!!!
+                </p>
             </div>
-            <!-- Error Message End -->
-            <!-- Search Result Start -->
-            <div class="container">
-                <div id="phone-container" class="card-group">
-                    <!-- <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Show Details</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This card has supporting text below as a natural lead-in to additional
-                                content.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Show Details</a>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <img src="..." class="card-img-top" alt="...">
-                        <div class="card-body">
-                            <h5 class="card-title">Card title</h5>
-                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
-                                additional content. This card has even longer content than the first to show that equal
-                                height action.</p>
-                        </div>
-                        <div class="card-footer">
-                            <a href="#" class="btn btn-primary">Show Details</a>
-                        </div>
-                    </div> -->
-                </div>
-            </div>
-            <!-- Search Result End -->
-            <!-- Phone Details start -->
-            <div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-                <div class="toast-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-                </div>
-                <div class="toast-body">
-                    <div class="container">
-                        <div class="phone-details-container card-group">
 
-                        </div>
-                    </div>
-                </div>
+            <!-- single phone details start -->
+            <div id="phone-details" class=" w-50 mx-auto">
             </div>
-            <!-- Phone Details end -->
+            <!-- single phone details end -->
+            <!-- Phone search result start -->
+            <div id="search-result" class="row row-cols-1 row-cols-md-3 g-4">
+            </div>
+            <!-- Phone search result end -->
         </div>
     </main>
     <!-- JavaScript Link -->
