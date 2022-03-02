@@ -16,10 +16,7 @@ const searchPhone = () => {
     }
 }
 
-/* const displayError = () => {
-    document.getElementById('error-message').style.display = 'none';
-} */
-
+//display search result
 const displaySearchResult = phones => {
     const searchResult = document.getElementById('search-result');
     searchResult.textContent = '';
@@ -47,14 +44,14 @@ const displaySearchResult = phones => {
         searchResult.appendChild(div);
     });
 }
-
+//load single phone
 const loadPhoneDetails = phoneId => {
     const url = `https://openapi.programming-hero.com/api/phone/${phoneId}`;
     fetch(url)
         .then(res => res.json())
         .then(dat => displayPhoneDetails(dat.data));
 }
-
+//display single phone
 const displayPhoneDetails = phone => {
     // console.log(phone);
     const phoneDetails = document.getElementById('phone-details');
